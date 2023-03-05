@@ -161,7 +161,7 @@ module Plutus
     end
 
     def self.options_for_select
-      types.map{|i| [i.to_s.split(), i.to_s.split]}
+      types.map{|i| i.to_s.split()}.flatten
     end
 
     # The trial balance of all accounts in the system. This should always equal zero,
