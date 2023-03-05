@@ -14,9 +14,9 @@ module Plutus
     unloadable if respond_to?(:unloadable)
 
     before_action :set_account, only: %i[ show edit update destroy ]
-    
+
     def index
-      @accounts = Account.all
+      @accounts = Account.all.includes(:entity)
 
       respond_to do |format|
         format.html # index.html.erb
