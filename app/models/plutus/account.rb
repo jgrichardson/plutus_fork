@@ -34,6 +34,7 @@ module Plutus
 
     # Validator to make sure account_type is not changed and send error
     validate :account_type_not_changed
+    validate :entity_id_not_changed
 
     has_many :amounts
     has_many :credit_amounts, :extend => AmountsExtension, :class_name => 'Plutus::CreditAmount'
@@ -47,7 +48,6 @@ module Plutus
     validates_presence_of :account_type
 
     # Prevent account_type from being changed
-    attr_readonly :account_type
 
     def self.types
       [
@@ -197,6 +197,12 @@ module Plutus
     def account_type_not_changed
       if account_type_changed? && self.persisted?
         errors.add(:account_type, "Change of account type is not allowed!")
+      end
+    end
+
+    def entity_id_not_changed
+      if entity_id_changed? && self.persisted?
+        errors.add(:entity_id, "Transfer of account to another entity is not allowed!")
       end
     end
 
