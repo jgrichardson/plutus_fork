@@ -32,6 +32,9 @@ module Plutus
   class Account < ActiveRecord::Base
     class_attribute :normal_credit_balance
 
+    # Validator to make sure account_type is not changed and send error
+    validate :account_type_not_changed
+
     has_many :amounts
     has_many :credit_amounts, :extend => AmountsExtension, :class_name => 'Plutus::CreditAmount'
     has_many :debit_amounts, :extend => AmountsExtension, :class_name => 'Plutus::DebitAmount'
@@ -187,6 +190,14 @@ module Plutus
 
     def self.ransackable_attributes(auth_object = nil)
       %w[name]
+    end
+
+    private
+
+    def account_type_not_changed
+      if account_type_changed? && self.persisted?
+        errors.add(:account_type, "Change of account type is not allowed!")
+      end
     end
 
   end
