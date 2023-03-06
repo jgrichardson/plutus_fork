@@ -43,6 +43,9 @@ module Plutus
 
     validates_presence_of :account_type
 
+    # Prevent account_type from being changed
+    attr_readonly :account_type
+
     def self.types
       [
         ::Plutus::Asset,
