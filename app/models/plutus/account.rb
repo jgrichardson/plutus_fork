@@ -41,7 +41,7 @@ module Plutus
 
     belongs_to :entity, class_name: 'Entity'
 
-    validates_presence_of :type
+    validates_presence_of :account_type
 
     def self.types
       [
@@ -81,15 +81,15 @@ module Plutus
     #
     # @return [BigDecimal] The decimal value balance
     def balance(options={})
-      if self.class == Plutus::Account
-        raise(NoMethodError, "undefined method 'balance'")
-      else
+      # if self.class == Plutus::Account
+      #   raise(NoMethodError, "undefined method 'balance'")
+      # else
         if self.normal_credit_balance ^ contra
           credits_balance(options) - debits_balance(options)
         else
           debits_balance(options) - credits_balance(options)
         end
-      end
+
     end
 
     # The credit balance for the account.
@@ -180,6 +180,10 @@ module Plutus
       else
         raise(NoMethodError, "undefined method 'trial_balance'")
       end
+    end
+
+    def self.ransackable_attributes(auth_object = nil)
+      %w[name]
     end
 
   end

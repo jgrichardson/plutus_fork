@@ -1,0 +1,12 @@
+<li id="<%= "#{dom_id(account)}_container" %>">
+  <%= turbo_frame_tag dom_id(account) do %>
+    <div>
+      <%= link_to account.name, edit_account_path(account) %>
+      <div>
+        <%= button_to account_path(account), method: :delete do %>
+          <span>Delete</span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</li>

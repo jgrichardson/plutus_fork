@@ -14,4 +14,5 @@ group :development, :test do
   gem 'rspec-its'
   gem 'coveralls', require: false
   gem 'debug'
+  gem 'ransack'
 end
